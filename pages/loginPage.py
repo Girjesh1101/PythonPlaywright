@@ -1,7 +1,9 @@
 from playwright.sync_api import Page, expect
 
+from pages.basePage import BasePage
 
-class LoginPage():
+
+class LoginPage(BasePage):
 
     #Locator
     PLACEHOLDER_LOGIN = "you@email.com"
@@ -10,6 +12,7 @@ class LoginPage():
 
 
     def __init__(self, page : Page):
+        super().__init__(page)
         self.page = page
 
     def login(self , username , password):
