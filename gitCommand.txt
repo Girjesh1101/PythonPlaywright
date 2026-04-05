@@ -1,0 +1,56 @@
+1. git init -> for git initiali
+2. git status -> to check the track or untrack file
+3. git add filename [.] -> add file to stage level and . use for all then file
+4. git commit -m "message" -> commit the stage file
+5. git log -> check the logs whoc commited what
+    # git log --oneline -> same but in one liner
+6. .gitignore -> ignore the file which contain in gitignore file
+7. .gitkeep -> kee the folder
+
+Branch
+8. git branch -> check all the branch
+    - git branch branch_name ->> create a new branch
+    - git switch branch_name -> switch to branch
+    - git switch -c branch_name -> created a branch and directly switched to new branch
+    - git branch -m <old_branch_name> <new_branch_name> -> rename a branch
+    - git branch -d branch_name
+
+
+Merge
+    - git merge branch_name --> merge file from branch
+    NOTE :  first switch to branch where you want to merge
+
+    git merge --abort -> abort the merging
+    NOTE : when conflict isn't fixed that time we use abort to merge
+
+
+Diff
+    - git diff --> check the difference between file
+    - git diff --satged
+    - git diff branch_first.. branch_second
+    - git diff <commit_hash-one>..<commit_hash_two>
+
+
+Stash
+    - git stash --> save locally and move to another branch
+    - git stash list -- to see all the stash file
+    - git stash apply stash@{1} -- to start working again
+    - git stash pop - apply and remove stash
+    - git stash drop -> drop all the stash
+
+
+tag
+    - git tag --> check all the give tag
+    - git tag -a tag_name -m "message" --> annotate tag
+
+
+Rebase -> rebase is basically use for re-align the base [rebase]
+    NOTE : rebase command is mostly use for sub-branch
+    WHY : why we use rebase , let's assume work happen on the same time and
+        you want latest code from master then simply go to sub-branch and rebase it , you will get all latest changes from the master.
+        another reason rebase doesn't create commit while merging
+    - git rebase master[branch_name]
+
+Reflog
+    - git reflog -> get all the commit details
+    - git reset --hard commit-hash
