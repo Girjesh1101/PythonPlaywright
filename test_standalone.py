@@ -23,8 +23,6 @@ def test_standalone(playwright: Playwright):
     #book an event
     page.get_by_role("button", name="Events").click()
     expect(page.locator("[data-testid='event-card']")).to_have_count(3)
-
-
     event = page.locator(".p-4").filter(has_text=event_name)
     event.get_by_role("link",name="Book Now").click()
 
@@ -34,8 +32,8 @@ def test_standalone(playwright: Playwright):
     page.get_by_placeholder("you@email.com").fill("prem@yopmail.com")
     page.get_by_placeholder("+91 98765 43210").fill("9820123456")
 
-    toalAmt = page.locator("div.bg-indigo-50 span[class='text-indigo-700']").text_content()
-    print(toalAmt.replace("$",""))
+    totalAmt = page.locator("div.bg-indigo-50 span[class='text-indigo-700']").text_content()
+    print(totalAmt.replace("$",""))
 
     page.get_by_role("button",name="Confirm Booking").click()
     # expect(page.locator('body')).to_have_text("Booking Confirmed!")
@@ -47,7 +45,7 @@ def test_standalone(playwright: Playwright):
     expect(page.locator(".mb-1")).to_have_text(event_name)
 
     page.get_by_role("link",name="View Details").click()
-    expect(page.locator(".text-indigo-700")).to_have_text(toalAmt)
+    expect(page.locator(".text-indigo-700")).to_have_text(totalAmt)
     expect(page.locator(""))
 
     time.sleep(3)
