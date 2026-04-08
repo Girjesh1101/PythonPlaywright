@@ -1,3 +1,5 @@
+import allure
+
 from eventhub.pages.login_page import LoginPage
 
 
@@ -7,9 +9,11 @@ class LoginService:
         self.login_page= LoginPage(page)
 
     def login(self, user):
-        self.login_page.enter_username(user.email)
-        self.login_page.enter_password(user.password)
-        self.login_page.click_signIn()
+        with allure.step(f"login with email: {user.email}"):
+            self.login_page.enter_username(user.email)
+            self.login_page.enter_password(user.password)
+            self.login_page.click_signIn()
 
+    @allure.step("verify user logged in")
     def get_logged_in_user(self):
         return self.login_page.get_logged_in_user()
