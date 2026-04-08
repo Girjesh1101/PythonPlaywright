@@ -1,5 +1,6 @@
 import allure
 import pytest
+from eventhub.utils.logger import log_file
 
 BASE_URL = "https://eventhub.rahulshettyacademy.com"
 
@@ -23,5 +24,14 @@ def pytest_runtest_makereport(item ,call):
                 name="Failure Screenshot",
                 attachment_type=allure.attachment_type.PNG
             )
+        try:
+            with open(log_file, "r") as f:
+                allure.attach(
+                    f.read(),
+                    name="Execution Logs",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+        except FileNotFoundError:
+            pass
 
 
