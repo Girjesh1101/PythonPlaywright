@@ -1,27 +1,31 @@
 import time
+import allure
 
 from eventhub.services.book_event_service import BookEventService
 from eventhub.services.event_service import EventService
 from eventhub.services.login_service import LoginService
-from eventhub.config.configtest import setup
+from eventhub.test_data.attendee_builder import AttendeeBuilder
 from eventhub.test_data.user_builder import UserBuilder
 
 
+@allure.title("Verify user can book event")
+@allure.description("Login with valid credential and verify user email")
 def test_login(setup):
+    page = setup
 
     user = UserBuilder().with_email("prem@yopmail.com").with_password("Automation@2026").build()
-
-    login_service = LoginService(setup)
+    attendee_data = AttendeeBuilder().with_random_data().build()
+    login_service = LoginService(page)
     login_service.login(user)
     actual_email = login_service.get_logged_in_user()
     assert  actual_email == user.email
 
-    event_service = EventService(setup)
+    event_service = EventService(page)
     event_service.book_event("World Tech Summit")
     event_service.verify_events_book_loaded()
 
-    book_event_service =BookEventService(setup)
-    book_event_service.book_event_confirm("Prem","simple@gmail.com","9876543210")
+    book_event_service =BookEventService(page)
+    book_event_service.book_event_confirm(attendee_data)
 
 
     time.sleep(5)
