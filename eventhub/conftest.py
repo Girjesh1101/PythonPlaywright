@@ -1,8 +1,13 @@
 import allure
 import pytest
+
+from eventhub.services.api.login_api_service import LoginApiService
+from eventhub.test_data.factory.user_factory import UserFactory
 from eventhub.utils.logger import log_file
+from eventhub.utils.token_manager import TokenManager
 
 BASE_URL = "https://eventhub.rahulshettyacademy.com"
+API_BASE_URL = "https://api.eventhub.rahulshettyacademy.com"
 
 @pytest.fixture(scope="function")
 def setup(page):
@@ -34,4 +39,17 @@ def pytest_runtest_makereport(item ,call):
         except FileNotFoundError:
             pass
 
+@pytest.fixture(scope="session", autouse=True)
+def auth_token():
 
+    token = TokenManager.get_token()
+
+    if not token:
+        user = UserFactory.get_user("valid")
+        service = LoginApiService(API_BASE_URL)
+        response = service.login(user)
+        token = response.json().get("token")
+        TokenManager.set_token(token)
+        print("token fix : ", token)
+
+    return token
