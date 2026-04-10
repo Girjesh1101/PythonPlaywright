@@ -50,6 +50,8 @@ def auth_token():
         response = service.login(user)
         token = response.json().get("token")
         TokenManager.set_token(token)
-        print("token fix : ", token)
-
     return token
+
+def get_event_id():
+    event_id = TokenManager.get_event_id()
+    return event_id

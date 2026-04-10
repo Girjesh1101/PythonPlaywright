@@ -4,8 +4,9 @@ import allure
 from eventhub.services.book_event_service import BookEventService
 from eventhub.services.event_service import EventService
 from eventhub.services.login_service import LoginService
-from eventhub.test_data.attendee_builder import AttendeeBuilder
-from eventhub.test_data.user_builder import UserBuilder
+from eventhub.test_data.builder.attendee_builder import AttendeeBuilder
+from eventhub.test_data.builder.user_builder import UserBuilder
+from eventhub.test_data.factory.user_factory import UserFactory
 
 
 @allure.title("Verify user can book event")

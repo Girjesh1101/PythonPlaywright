@@ -6,7 +6,6 @@ from eventhub.test_data.builder.user_builder import UserBuilder
 class UserFactory:
 
     @staticmethod
-
     def get_user(user_type:str):
         with allure.step(f"create user :{user_type}"):
 
