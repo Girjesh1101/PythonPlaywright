@@ -24,7 +24,12 @@ pipelines:
                     command: sh
                     arguments:
                       - -c
-                      - docker run --rm -v $(pwd)/allure-results:/app/allure-results playwright-tests || true
+                      - docker run --rm -v /tmp/allure-results:/app/allure-results playwright-tests || true
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - cp -r /tmp/allure-results ./allure-results
               artifacts:
                 - build:
                     source: allure-results
