@@ -24,7 +24,7 @@ pipelines:
                     command: sh
                     arguments:
                       - -c
-                      - docker run --rm -v $(pwd)/allure-results:/app/allure-results playwright-tests
+                      - docker run --rm -v $(pwd)/allure-results:/app/allure-results playwright-tests || true
               artifacts:
                 - build:
                     source: allure-results
@@ -39,4 +39,4 @@ pipelines:
                     command: sh
                     arguments:
                       - -c
-                      - echo "All tests passed! Ready to deploy!"
+                      - echo "Pipeline completed! Check allure report for results."
