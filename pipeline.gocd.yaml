@@ -15,6 +15,7 @@ pipelines:
                     arguments:
                       - -c
                       - docker build -t playwright-tests .
+
       - run-tests:
           jobs:
             pytest-run:
@@ -23,16 +24,22 @@ pipelines:
                     command: sh
                     arguments:
                       - -c
-                      - mkdir -p /tmp/allure-results && docker run --rm -v /tmp/allure-results:/app/allure-results playwright-tests || true
+                      - docker run --name test-runner playwright-tests || true
                 - exec:
                     command: sh
                     arguments:
                       - -c
-                      - mkdir -p ./allure-results && cp -r /tmp/allure-results/. ./allure-results/
+                      - docker cp test-runner:/app/allure-results ./allure-results || true
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - docker rm test-runner || true
               artifacts:
                 - build:
                     source: allure-results
                     destination: reports
+
       - deploy:
           approval: manual
           jobs:
