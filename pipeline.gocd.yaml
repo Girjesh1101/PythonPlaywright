@@ -1,0 +1,20 @@
+pipelines:
+  my-yaml-pipeline:
+    group: defaultGroup
+    materials:
+      git:
+        git: https://github.com/Girjesh1101/LearningCICD.git
+        branch: main
+    stages:
+      - build:
+          jobs:
+            build-job:
+              tasks:
+                - exec:
+                    command: sh
+                    arguments:
+                      - build.sh
+              artifacts:
+                - build:
+                    source: built-output.txt
+                    destination: output
