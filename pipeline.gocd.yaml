@@ -1,20 +1,42 @@
 pipelines:
-  my-yaml-pipeline:
+  eventhub-tests:
     group: defaultGroup
     materials:
       git:
-        git: https://github.com/Girjesh1101/LearningCICD.git
-        branch: main
+        git: https://github.com/Girjesh1101/PythonPlaywright.git
+        branch: master
     stages:
-      - build:
+      - build-image:
           jobs:
-            build-job:
+            docker-build:
               tasks:
                 - exec:
                     command: sh
                     arguments:
-                      - build.sh
+                      - -c
+                      - docker build -t playwright-tests .
+
+      - run-tests:
+          jobs:
+            pytest-run:
+              tasks:
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - docker run --rm -v $(pwd)/allure-results:/app/allure-results playwright-tests
               artifacts:
                 - build:
-                    source: built-output.txt
-                    destination: output
+                    source: allure-results
+                    destination: reports
+
+      - deploy:
+          approval: manual
+          jobs:
+            notify:
+              tasks:
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - echo "All tests passed! Ready to deploy!"
