@@ -35,9 +35,17 @@ pipelines:
                     arguments:
                       - -c
                       - docker rm test-runner || true
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - allure generate ./allure-results --clean -o ./allure-report
               artifacts:
                 - build:
                     source: allure-results
+                    destination: reports
+                - build:
+                    source: allure-report
                     destination: reports
 
       - deploy:
